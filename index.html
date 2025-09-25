@@ -1,37 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Dashboard</title>
-  <link rel="stylesheet" href="style.css">
-  <!-- مكتبة رسومات -->
+  <title>داشبورد تجريبي</title>
+
+  <!-- هنا بنربط CSS -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- مكتبة Chart.js للرسم البياني -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h1>Interactive Dashboard</h1>
+  <header>
+    <h1>داشبورد التدريب</h1>
+  </header>
 
-    <!-- الكروت -->
-    <div class="cards">
-      <div class="card">
-        <h2>Users</h2>
-        <p id="usersCount">150</p>
-      </div>
-      <div class="card">
-        <h2>Messages</h2>
-        <p id="messagesCount">320</p>
-      </div>
-      <div class="card">
-        <h2>Projects</h2>
-        <p id="projectsCount">12</p>
-      </div>
-    </div>
+  <section>
+    <label for="yearSelect">اختر السنة:</label>
+    <select id="yearSelect">
+      <option value="2022">2022</option>
+      <option value="2023">2023</option>
+    </select>
+  </section>
 
-    <!-- جراف -->
-    <canvas id="lineChart"></canvas>
-  </div>
+  <section>
+    <canvas id="myChart"></canvas>
+  </section>
 
-  <script src="script.js"></script>
+  <!-- هنا بنربط ملف JavaScript -->
+  <script src="app.js"></script>
 </body>
 </html>
