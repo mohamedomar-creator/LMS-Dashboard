@@ -1,33 +1,164 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en" dir="ltr">
 <head>
-  <meta charset="UTF-8">
-  <title>داشبورد تجريبي</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>United Pharmacies - LMS Dashboard</title>
 
-  <!-- هنا بنربط CSS -->
-  <link rel="stylesheet" href="styles.css">
-  
-  <!-- مكتبة Chart.js للرسم البياني -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Chart.js v3/v4 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>داشبورد التدريب</h1>
-  </header>
+  <div class="container">
+    <header class="header">
+      <h1>United Pharmacies</h1>
+      <p>LMS Dashboard — Course Completion Overview</p>
+    </header>
 
-  <section>
-    <label for="yearSelect">اختر السنة:</label>
-    <select id="yearSelect">
-      <option value="2022">2022</option>
-      <option value="2023">2023</option>
-    </select>
-  </section>
+    <section class="stats-container" aria-label="summary statistics">
+      <div class="stat-card completed">
+        <span class="icon">✅</span>
+        <div class="number" id="completedCount">0</div>
+        <div class="label">Completed</div>
+      </div>
 
-  <section>
-    <canvas id="myChart"></canvas>
-  </section>
+      <div class="stat-card inprogress">
+        <span class="icon">⏳</span>
+        <div class="number" id="inProgressCount">0</div>
+        <div class="label">In Progress</div>
+      </div>
 
-  <!-- هنا بنربط ملف JavaScript -->
-  <script src="app.js"></script>
+      <div class="stat-card pending">
+        <span class="icon">⏸️</span>
+        <div class="number" id="pendingCount">0</div>
+        <div class="label">Pending</div>
+      </div>
+
+      <div class="stat-card average">
+        <span class="icon">📊</span>
+        <div class="number" id="averageRate">0%</div>
+        <div class="label">Average Completion</div>
+      </div>
+    </section>
+
+    <section class="filters-section" aria-label="filters">
+      <h3>Filters & Search</h3>
+
+      <div class="filters-grid">
+        <div class="filter-group">
+          <label class="filter-label" for="pharmacistSearch">Search pharmacists</label>
+          <input id="pharmacistSearch" class="search-input" placeholder="Search by name..." />
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label" for="statusFilter">Filter by status</label>
+          <select id="statusFilter" class="filter-select">
+            <option value="">All statuses</option>
+            <option value="Completed">Completed</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Pending">Pending</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label" for="dateFrom">From date</label>
+          <input id="dateFrom" class="date-input" type="date" />
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label" for="dateTo">To date</label>
+          <input id="dateTo" class="date-input" type="date" />
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">Cities (multi)</label>
+          <div class="multi-select" id="cityMultiSelect">
+            <div class="search-input" id="cityTrigger">Choose cities...</div>
+            <div class="multi-select-dropdown" id="cityDropdown"></div>
+            <div class="selected-items" id="selectedCities"></div>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">Supervisors (multi)</label>
+          <div class="multi-select" id="supervisorMultiSelect">
+            <div class="search-input" id="supervisorTrigger">Choose supervisors...</div>
+            <div class="multi-select-dropdown" id="supervisorDropdown"></div>
+            <div class="selected-items" id="selectedSupervisors"></div>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label">Districts (multi)</label>
+          <div class="multi-select" id="districtMultiSelect">
+            <div class="search-input" id="districtTrigger">Choose districts...</div>
+            <div class="multi-select-dropdown" id="districtDropdown"></div>
+            <div class="selected-items" id="selectedDistricts"></div>
+          </div>
+        </div>
+
+        <div class="filter-group" style="align-self: end;">
+          <button id="clearFilters" class="btn btn-secondary">Clear All Filters</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="chart-container">
+      <div class="chart-wrapper">
+        <h3 class="chart-title">Performance Trend</h3>
+        <canvas id="performanceChart" width="800" height="250"></canvas>
+      </div>
+
+      <div class="charts-grid">
+        <div class="chart-wrapper small">
+          <h3 class="chart-title">Cities — Avg Completion</h3>
+          <canvas id="citiesChart" width="400" height="250"></canvas>
+        </div>
+
+        <div class="chart-wrapper small">
+          <h3 class="chart-title">Supervisors — Avg Completion</h3>
+          <canvas id="supervisorsChart" width="400" height="250"></canvas>
+        </div>
+
+        <div class="chart-wrapper small">
+          <h3 class="chart-title">Districts — Avg Completion</h3>
+          <canvas id="districtsChart" width="400" height="250"></canvas>
+        </div>
+
+        <div class="chart-wrapper small">
+          <h3 class="chart-title">Top Pharmacists</h3>
+          <canvas id="pharmacistsChart" width="400" height="250"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-wrapper" style="margin-top:25px;">
+        <h3 class="chart-title">Status Distribution</h3>
+        <div style="max-width:420px;margin:0 auto;"><canvas id="statusPieChart" width="400" height="400"></canvas></div>
+      </div>
+    </section>
+
+    <section class="table-container">
+      <div id="loadingMessage" class="loading">Loading data... ⏳</div>
+
+      <table id="dataTable" style="display:none;">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>City</th>
+            <th>District</th>
+            <th>Supervisor</th>
+            <th>Completion</th>
+            <th>Status</th>
+            <th>Completion Date</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
