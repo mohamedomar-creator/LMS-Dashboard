@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- مكتبة رسومات -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Interactive Dashboard</h1>
+
+    <!-- الكروت -->
+    <div class="cards">
+      <div class="card">
+        <h2>Users</h2>
+        <p id="usersCount">150</p>
+      </div>
+      <div class="card">
+        <h2>Messages</h2>
+        <p id="messagesCount">320</p>
+      </div>
+      <div class="card">
+        <h2>Projects</h2>
+        <p id="projectsCount">12</p>
+      </div>
+    </div>
+
+    <!-- جراف -->
+    <canvas id="lineChart"></canvas>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
